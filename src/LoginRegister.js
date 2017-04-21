@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Body, Button, Container, Content, Header, Icon, Input, InputGroup, StyleProvider, Title} from 'native-base'
-import {Image,  StyleSheet, Text, View} from 'react-native'
+import {Image,  StyleSheet, Text, View, ScrollView} from 'react-native'
 import getTheme from '../native-base-theme/components'
 import material from '../native-base-theme/variables/material'
 import {authenticateUser, registerUser} from './lib/FirebaseHandler'
@@ -86,62 +86,64 @@ export default class LoginRegister extends Component {
                         </Body>
                     </Header>
                     <Content style={{backgroundColor: 'black'}}>
-                        <View style={styles.content}>
-                            <Image source={require('../images/logo.png')} />
-                            <View style={styles.form}>
-                                {
-                                    this.state.showRegister ?
+                        <ScrollView keyboardShouldPersistTaps="never">
+                            <View style={styles.content}>
+                                <Image source={require('../images/logo.png')} />
+                                <View style={styles.form}>
+                                    {
+                                        this.state.showRegister ?
+                                        <View>
+                                            <InputGroup ref={(group) => {this.nombreGrupo = group}}>
+                                                <Icon name='ios-person' style={{color: 'white'}}/>
+                                                <Input placeholder='Nombre' style={{color: 'white'}}
+                                                onChangeText={(name) => this.setState({name})} />
+                                            </InputGroup>
+                                            <Text style={styles.errorText}>{this.state.nameError}</Text>
+                                        </View>
+                                    : null
+                                    }
                                     <View>
-                                        <InputGroup ref={(group) => {this.nombreGrupo = group}}>
-                                            <Icon name='ios-person' style={{color: 'white'}}/>
-                                            <Input placeholder='Nombre' style={{color: 'white'}}
-                                            onChangeText={(name) => this.setState({name})} />
+                                        <InputGroup>
+                                            <Icon name='ios-mail' style={{color: 'white'}}/>
+                                            <Input placeholder='Email' style={{color: 'white'}}
+                                            keyboardType='email-address' 
+                                            onChangeText={(email) => this.setState({email})}
+                                            autoCapitalize='none'
+                                            autoCorrect={false}/>
                                         </InputGroup>
-                                        <Text style={styles.errorText}>{this.state.nameError}</Text>
+                                        <Text style={styles.errorText}>{this.state.emailError}</Text>
                                     </View>
-                                   : null
-                                }
-                                <View>
-                                    <InputGroup>
-                                        <Icon name='ios-mail' style={{color: 'white'}}/>
-                                        <Input placeholder='Email' style={{color: 'white'}}
-                                        keyboardType='email-address' 
-                                        onChangeText={(email) => this.setState({email})}
-                                        autoCapitalize='none'
-                                        autoCorrect={false}/>
-                                    </InputGroup>
-                                    <Text style={styles.errorText}>{this.state.emailError}</Text>
-                                </View>
-                                <View  style={{marginBottom: 30}}>
-                                    <InputGroup>
-                                        <Icon name='ios-unlock' style={{color: 'white'}}/>
-                                        <Input placeholder='Password' style={{color: 'white'}} secureTextEntry={true} 
-                                            onChangeText={(password) => this.setState({password})}/>
-                                    </InputGroup>
-                                    <Text style={styles.errorText}>{this.state.passwordError}</Text>
-                                </View>
-                                { !this.state.showRegister ?
-                                    <View>
-                                        <Button info full onPress={this.handleLogin}><Text style={loginButtonText}>Ingresar</Text></Button>
-                                        <View style={{marginTop: 20}}>
-                                            <Button success full onPress={
-                                                () => {
-                                                    this.clearErrors();
-                                                    this.setState({showRegister: true})
-                                                }
-                                            }><Text style={loginButtonText}>¿No tienes cuenta aún? Registrate</Text></Button>
+                                    <View  style={{marginBottom: 30}}>
+                                        <InputGroup>
+                                            <Icon name='ios-unlock' style={{color: 'white'}}/>
+                                            <Input placeholder='Password' style={{color: 'white'}} secureTextEntry={true} 
+                                                onChangeText={(password) => this.setState({password})}/>
+                                        </InputGroup>
+                                        <Text style={styles.errorText}>{this.state.passwordError}</Text>
+                                    </View>
+                                    { !this.state.showRegister ?
+                                        <View>
+                                            <Button info full onPress={this.handleLogin}><Text style={loginButtonText}>Ingresar</Text></Button>
+                                            <View style={{marginTop: 20}}>
+                                                <Button success full onPress={
+                                                    () => {
+                                                        this.clearErrors();
+                                                        this.setState({showRegister: true})
+                                                    }
+                                                }><Text style={loginButtonText}>¿No tienes cuenta aún? Registrate</Text></Button>
+                                            </View>
                                         </View>
-                                    </View>
-                                   : 
-                                   <View> 
-                                        <Button info full onPress={this.handleSignup}><Text style={loginButtonText}>Registrarme</Text></Button>
-                                        <View style={{marginTop: 20}}>
-                                            <Button success full onPress={() => this.setState({showRegister: false})}><Text style={loginButtonText}>Ya tengo una cuenta</Text></Button>
+                                    : 
+                                    <View> 
+                                            <Button info full onPress={this.handleSignup}><Text style={loginButtonText}>Registrarme</Text></Button>
+                                            <View style={{marginTop: 20}}>
+                                                <Button success full onPress={() => this.setState({showRegister: false})}><Text style={loginButtonText}>Ya tengo una cuenta</Text></Button>
+                                            </View>
                                         </View>
-                                    </View>
-                                }
+                                    }
+                                </View>
                             </View>
-                        </View>
+                        </ScrollView>
                     </Content>
                 </Container>
             </StyleProvider>

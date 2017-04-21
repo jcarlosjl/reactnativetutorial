@@ -21,3 +21,7 @@ export const registerUser = (name, email, password) => {
 export const getCurrentUser = () => {
     return firebase.auth().getCurrentUser;
 }
+
+export const getAuth = () => {
+    return firebase.auth();
+}

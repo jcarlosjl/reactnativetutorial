@@ -3,6 +3,7 @@ import {Body,Container, Header, Icon, StyleProvider, Tab, TabHeading, Tabs, Titl
 import {Text, View} from 'react-native';
 import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
+import Comics from './Comics'
 
 export default class Main extends Component {
     render() {
@@ -21,8 +22,7 @@ export default class Main extends Component {
                                 <Text style={{marginHorizontal: 10}}>Historietas</Text>
                             </TabHeading>
                         }>
-                            <View>
-                            </View>
+                            <Comics navigator={this.props.navigator}/>
                         </Tab>
                         <Tab heading={
                             <TabHeading>

@@ -1,40 +1,25 @@
 import React,{Component} from 'react';
-import {View} from 'react-native';
-import Cover from './src/Cover.js';
-import LoginRegister from './src/LoginRegister';
-import {getCurrentUser, getAuth} from './src/lib/FirebaseHandler';
-import Main from './src/Main'
+import {Navigator, View} from 'react-native';
+import Home from './src/Home';
+import ComicDetail from './src/ComicDetail';
 
 class MarvelBook extends Component {
-    state = {
-        hasAccount: false,
-        showCover: true,
-    }
-
-    componentDidMount = () => {
-        getAuth().onAuthStateChanged( (user) => {
-            let hasAccount = false;
-            if (user) {
-                hasAccount = true;
-            }
-            this.setState({hasAccount: hasAccount, showCover: false});
-        });
+    renderScene = (route, navigator) => {
+        if(route.name == 'Home') {
+            return <Home navigator={navigator} />
+        }
+        if(route.name == 'ComicView') {
+            return <ComicDetail navigator={navigator} comic={route.data}/>
+        }
     }
 
     render() {
-        if (this.state.showCover) {
-            return (
-                <Cover />
-            )
-        } else if (this.state.hasAccount) {
-            return(
-                <Main />
-            )
-        } else {
-            return (
-                <LoginRegister />
-            )
-        }
+        return (
+            <Navigator style={{ flex:1 }}
+                initialRoute={{ name: 'Home' }}
+                renderScene={ this.renderScene }
+            />
+        );
     }
 }
 

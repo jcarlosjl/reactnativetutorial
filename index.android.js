@@ -1,5 +1,5 @@
 import React from 'react';
 import {AppRegistry} from 'react-native';
-import marvelbook from './app';
+import Marvelbook from './app';
 
-AppRegistry.registerComponent('marvelbook', () => marvelbook);
+AppRegistry.registerComponent('marvelbook', () => Marvelbook);
